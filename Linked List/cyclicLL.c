@@ -107,7 +107,7 @@ int cyclelength(struct node *start)
     printf("cycle length = %d \n",c);
 }
 /*********************************************************/
-int cyclic(struct node *start)
+int Iscyclic(struct node *start)
 {
     struct node *t,*r;
     t=start;
@@ -119,8 +119,6 @@ int cyclic(struct node *start)
         r=r->next;
         if(t==r)
             break;
-        else
-            continue;
     }
     if(t==r){
         printf("cyclic");
@@ -156,7 +154,7 @@ int main()
         q=q->next;
     
     p->next=q;
-    cyclic(start1);
+    Iscyclic(start1);
     cyclelength(start1);
     cyclestart(start1);
 }

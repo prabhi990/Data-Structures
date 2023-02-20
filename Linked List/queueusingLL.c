@@ -72,23 +72,15 @@ int traverse(struct node *start)
 int insertend(struct node **start,int x)
 {
     struct node *q,*p;
-    q=(*start);
-    if(q==NULL)
+    q=*start;
+    while(q->next!=NULL)
     {
-        insertbegin(start,x);
+        q=q->next;
     }
-    else
-    {
-        while((q->next)!= NULL)
-        {
-            q=q->next;
-        }
-        p=getnode();
-        p->info=x;
-        p->next=NULL;
-        q->next=p;
-    }
-    
+    p=getnode();
+    p->info=x;
+    p->next=NULL;
+    q->next=p;
 }
 /*********************************************************/
 struct node *swap(struct node *ptr1,struct node*ptr2)
@@ -188,29 +180,39 @@ int deleteEnd(struct node **start)
 
 }
 /*********************************************************/
-
-/*********************************************************/
-int main()
-{
-    struct node *start;
-    start=NULL;
-    insertbegin(&start,10);
-    insertbegin(&start,51);
-    insertbegin(&start,36);
-    insertbegin(&start,45);
-    insertbegin(&start,78);
-    insertbegin(&start,53);
-    insertbegin(&start,20);
-    traverse(start);
-    insertend(&start,44);
-    insertend(&start,55);
-    insertend(&start,50);
-    traverse(start);
-    deletebegin(&start);
-    traverse(start);
-    deleteafter(&start);
-    traverse(start);
-    deleteEnd(&start);
-    traverse(start);
-    
+void Enqueue(struct Node **FRONT,struct Node **REAR,int x){
+    if((*REAR)==NULL){
+        insertbegin((*REAR),x);
+        (*FRONT)=(*REAR);
+    }
+    else{
+        insertafter((*REAR),x);
+        (*REAR) = (*REAR)->Next;
+    }
+}
+int Dequeue(struct Node **FRONT,struct Node **REAR){
+    int x;
+    if((*FRONT)==NULL){
+        printf("Deletion is not possible");
+        exit(1);
+    }
+    else{
+        x=deletebegin((*FRONT));
+        if((*FRONT)==NULL) 
+        *REAR=NULL;
+    }
+    return x;
+}
+int main(){
+    struct Node *FRONT,*REAR;
+    FRONT=NULL;
+    REAR=NULL;
+    int x;
+    Enqueue(&FRONT,&REAR,10);
+    Enqueue(&FRONT,&REAR,20);
+    Enqueue(&FRONT,&REAR,30);
+    Enqueue(&FRONT,&REAR,40);
+    Enqueue(&FRONT,&REAR,50);
+    Traverse(&FRONT);
+    printf("\n%d",Dequeue(&FRONT,&REAR));
 }
